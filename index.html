@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Calendar...</title>
+    <!-- Use Tailwind CSS for simple styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* A simple spinning loader */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        (function() {
+            // URLs
+            const safariUrl = "webcals://google.com/calendar/ical/4183b2f66459a6e9f6bdba01b4fb5a8ff16e674626605a3780b4668cbab8422d%40group.calendar.google.com/public/basic.ics";
+            const otherUrl = "https://calendar.google.com/calendar/u/0?cid=NDE4M2IyZjY2NDU5YTZlOWY2YmRiYTAxYjRmYjVhOGZmMTZlNjc0NjI2NjA1YTM3ODBiNDY2OGNiYWI4NDIyZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
+
+            // Get the user agent string
+            const ua = navigator.userAgent;
+
+            // Check for Safari
+            // We must check for "Safari" AND exclude "Chrome" and "CriOS" (Chrome on iOS)
+            // as their user agents also contain the "Safari" string.
+            const isSafari = ua.includes('Safari') && !ua.includes('Chrome') && !ua.includes('CriOS');
+
+            // Perform the redirect
+            if (isSafari) {
+                window.location.href = safariUrl;
+            } else {
+                window.location.href = otherUrl;
+            }
+        })();
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center p-8 bg-white rounded-lg shadow-md">
+            <div class="loader mx-auto mb-4"></div>
+            <h1 class="text-2xl font-semibold text-gray-800">Redirecting to your calendar...</h1>
+            <p class="text-gray-600 mt-2">Please wait a moment.</p>
+        </div>
+    </div>
+</body>
+</html>
