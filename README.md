@@ -35,7 +35,7 @@ Based on the detection, it performs the following logic:
 ## 🌟 Features
 
 - **Smart Redirect:** Directs users to the best link for their platform.  
-- **Rich Link Previews:** Includes `<meta>` and Open Graph (`og:`) tags in the `<head>` so that when you share the link on apps like WhatsApp, X (Twitter), or iMessage, it displays a clean title (“360 Fellowship Calendar”) and description.  
+- **Rich Link Previews:** Includes `<meta>` and Open Graph (`og:`) tags in the `<head>` so that when you share the link on apps like WhatsApp, X (Twitter), or iMessage, it displays a clean title and description.  
 - **No User Click Needed:** The redirect is automatic on page load for all platforms.  
 - **Static Site:** No server-side logic required. Can be hosted for free on any static hosting service (e.g., GitHub Pages, Netlify, or Vercel).  
 
@@ -60,5 +60,6 @@ Based on the detection, it performs the following logic:
 
 ---
 
-**✅ That’s it!**  
-Once deployed, your Smart Calendar Redirector will automatically guide users to the right calendar subscription experience for their device or browser.
+This project is created for 360 Fellowship 
+linktr.ee/360Fellowship
+@360fellowship
