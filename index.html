@@ -49,13 +49,10 @@
                 document.getElementById('redirect-loader').style.display = 'block';
                 window.location.href = appSubscribeUrl;
             } else if (isAndroid) {
-                // On Android, show the manual subscribe button.
-                document.getElementById('android-subscribe').style.display = 'block';
-                // Attach the click handler for the button
-                document.getElementById('android-button').onclick = function() {
-                    // CHANGED: Use the new Android Intent URL
-                    window.location.href = androidIntentUrl;
-                };
+                // On Android, show the redirect message and attempt to redirect automatically.
+                // NOTE: Modern browsers will likely block this without a user click.
+                document.getElementById('redirect-loader').style.display = 'block';
+                window.location.href = androidIntentUrl;
             } else {
                 // For everyone else, show redirect message and go to Google Calendar web.
                 document.getElementById('redirect-loader').style.display = 'block';
@@ -69,14 +66,14 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="flex items-center justify-center min-h-screen p-4">
-        <!-- Loader: Hidden by default -->
+        <!-- Loader: Visible by default now for all paths -->
         <div id="redirect-loader" class="text-center p-8 bg-white rounded-lg shadow-md" style="display: none;">
             <div class="loader mx-auto mb-4"></div>
             <h1 class="text-2xl font-semibold text-gray-800">Redirecting to your calendar...</h1>
             <p class="text-gray-600 mt-2">Please wait a moment.</p>
         </div>
 
-        <!-- Android Button: Hidden by default -->
+        <!-- Android Button: This div is no longer used by the script -->
         <div id="android-subscribe" class="text-center p-8 bg-white rounded-lg shadow-md max-w-sm w-full" style="display: none;">
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">Subscribe to Calendar</h1>
             <p class="text-gray-600 mt-2 mb-6">Click the button below to add the calendar to your Google Calendar app.</p>
