@@ -22,34 +22,61 @@
         }
     </style>
     <script>
-        (function() {
+        function handleRedirect() {
             // URLs
-            const safariUrl = "webcal://calendar.google.com/calendar/ical/4183b2f66459a6e9f6bdba01b4fb5a8ff16e674626605a3780b4668cbab8422d%40group.calendar.google.com/public/basic.ics";
-            const otherUrl = "https://calendar.google.com/calendar/u/0?cid=NDE4M2IyZjY2NDU5YTZlOWY2YmRiYTAxYjRmYjVhOGZmMTZlNjc0NjI2NjA1YTM3ODBiNDY2OGNiYWI4NDIyZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
+            const appSubscribeUrl = "webcal://calendar.google.com/calendar/ical/4183b2f66459a6e9f6bdba01b4fb5a8ff16e674626605a3780b4668cbab8422d%40group.calendar.google.com/public/basic.ics";
+            const googleCalWebUrl = "https://calendar.google.com/calendar/u/0?cid=NDE4M2IyZjY2NDU5YTZlOWY2YmRiYTAxYjRmYjVhOGZmMTZlNjc0NjI2NjA1YTM3ODBiNDY2OGNiYWI4NDIyZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
 
             // Get the user agent string
             const ua = navigator.userAgent;
 
-            // Check for Safari
-            // We must check for "Safari" AND exclude "Chrome" and "CriOS" (Chrome on iOS)
-            // as their user agents also contain the "Safari" string.
-            const isSafari = ua.includes('Safari') && !ua.includes('Chrome') && !ua.includes('CriOS');
+            // Check for all iOS devices (iPhone, iPad, iPod)
+            const isIOS = /iPhone|iPad|iPod/i.test(ua);
+            
+            // Check for Safari on macOS
+            const isMacSafari = /Mac/i.test(ua) && ua.includes('Safari') && !/Chrome|CriOS/i.test(ua);
 
-            // Perform the redirect
-            if (isSafari) {
-                window.location.href = safariUrl;
+            // Check for Android
+            const isAndroid = /Android/i.test(ua);
+
+            if (isIOS || isMacSafari) {
+                // On all iOS browsers or Safari on macOS, show redirect message and go to webcal.
+                document.getElementById('redirect-loader').style.display = 'block';
+                window.location.href = appSubscribeUrl;
+            } else if (isAndroid) {
+                // On Android, show the manual subscribe button.
+                document.getElementById('android-subscribe').style.display = 'block';
+                // Attach the click handler for the button
+                document.getElementById('android-button').onclick = function() {
+                    window.location.href = googleCalWebUrl;
+                };
             } else {
-                window.location.href = otherUrl;
+                // For everyone else, show redirect message and go to Google Calendar web.
+                document.getElementById('redirect-loader').style.display = 'block';
+                window.location.href = googleCalWebUrl;
             }
-        })();
+        }
+        
+        // Run the function when the DOM is ready
+        document.addEventListener('DOMContentLoaded', handleRedirect);
     </script>
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="text-center p-8 bg-white rounded-lg shadow-md">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <!-- Loader: Hidden by default -->
+        <div id="redirect-loader" class="text-center p-8 bg-white rounded-lg shadow-md" style="display: none;">
             <div class="loader mx-auto mb-4"></div>
             <h1 class="text-2xl font-semibold text-gray-800">Redirecting to your calendar...</h1>
             <p class="text-gray-600 mt-2">Please wait a moment.</p>
+        </div>
+
+        <!-- Android Button: Hidden by default -->
+        <div id="android-subscribe" class="text-center p-8 bg-white rounded-lg shadow-md max-w-sm w-full" style="display: none;">
+            <h1 class="text-2xl font-semibold text-gray-800 mb-6">Subscribe to Calendar</h1>
+            <p class="text-gray-600 mt-2 mb-6">Click the button below to add the calendar to your Google Calendar app.</p>
+            <button id="android-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md transition duration-300 ease-in-out w-full">
+                Subscribe to the 360 Calendar
+            </button>
         </div>
     </div>
 </body>
